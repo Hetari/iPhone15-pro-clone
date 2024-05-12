@@ -1,3 +1,9 @@
-<template>Tes</template>
+<template>
+  <Navbar></Navbar>
+</template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { Navbar } from './components';
+
+  Navbar;
+</script>
