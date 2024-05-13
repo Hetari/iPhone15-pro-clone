@@ -67,6 +67,7 @@
     </button>
 
     <button
+      v-else
       @click="togglePause"
       class="control-btn">
       <img
@@ -87,9 +88,9 @@
   const paused = ref(false);
   const carousel: any = ref('');
   const currentVideoIndex = ref(0);
-  let videos: any = [];
-  let texts: any = [];
-  let progressBars: any = [];
+  let videos: HTMLVideoElement[] = [];
+  let texts = [];
+  let progressBars = [];
 
   function setVideosRef(e: any) {
     if (e) {
@@ -124,7 +125,34 @@
       : '12px';
   };
 
-  const playNextVideo = (index: number) => {};
+  /**
+   * Play the next video in the video carousel
+   * @param {number} index The index of the current video in the highlightsSlides array
+   */
+  const playNextVideo = (index: number) => {
+    // If the index is bigger than the number of videos,
+    // stop the video and return (don't play the next video)
+    if (index > highlightsSlides.length - 1) {
+      // Stop playing the video
+      playing.value = false;
+      return;
+    }
+
+    const nextVideo = videos[index + 1];
+
+    // If there is no next video, stop here
+    if (typeof nextVideo === 'undefined') {
+      return;
+    }
+
+    nextVideo.play();
+
+    // Increment the currentVideoIndex value
+    currentVideoIndex.value++;
+
+    // TODO: add animation here same as start function and move the video slide
+    // TODO: stop the animation here
+  };
 
   /**
    * Start the video carousel
@@ -143,11 +171,35 @@
     // TODO: stop the animation here
   };
 
-  const restart = () => {};
-  const togglePause = () => {};
-  const stopCurrentVideo = () => {};
+  const restart = () => {
+    // TODO: add animation here
+    // TODO: stop the animation here
 
-  // TODO
+    // Reset everything
+    currentVideoIndex.value = 0;
+    paused.value = false;
+
+    // Start the video carousel
+    start();
+  };
+
+  const togglePause = () => {
+    playing.value = !playing.value;
+
+    const currentVideo = videos[currentVideoIndex.value];
+    if (currentVideo) {
+      if (!playing.value) {
+        currentVideo.pause();
+      }
+      //
+      else {
+        currentVideo.play();
+      }
+    }
+
+    // TODO: paused the gsap timeline animation
+  };
+
   /**
    * Initialize the intersection observer to observe the carousel
    * When the carousel comes into the viewport, start the video
