@@ -49,6 +49,7 @@
         v-for="(video, index) in highlightsSlides"
         :key="video.id"
         :style="{ width: dotWidth(index) }"
+        @click="goToVide(index)"
         class="mx-2 size-3 bg-gray-200 rounded-full relative cursor-pointer">
         <span
           :ref="setProgressBars"
@@ -158,8 +159,8 @@
    * Start the video carousel
    * Play the first video and set playing to true
    */
-  const start = () => {
-    const firstVideo = videos[0];
+  const start = (index: number = 0) => {
+    const firstVideo = videos[index];
 
     // play the first video
     firstVideo.play();
@@ -198,6 +199,25 @@
     }
 
     // TODO: paused the gsap timeline animation
+  };
+
+  /**
+   * Go to a specific video in the video carousel
+   * @param {number} index The index of the video in the highlightsSlides array
+   */
+  const goToVide = (index: number) => {
+    // TODO: add animation here
+
+    // Pause the current video, and restart it
+    const currentVideo = videos[currentVideoIndex.value];
+    currentVideo.pause();
+    currentVideo.currentTime = 0;
+
+    // Update the currentVideoIndex value
+    currentVideoIndex.value = index;
+
+    // Start the video at the new index
+    start(index);
   };
 
   /**
