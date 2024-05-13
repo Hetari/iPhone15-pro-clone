@@ -48,10 +48,11 @@
       scrollTrigger: {
         trigger: '#highlights-title',
         // start: 'top bottom',
-        start: 'top 80%',
+        start: 'top bottom',
         // end: 'bottom 80%',
-        end: 'bottom 50%',
-        scrub: 1,
+        end: 'bottom 80%',
+        // scrub: 1,
+        toggleActions: 'play none none reset',
       },
     });
 
@@ -60,15 +61,11 @@
       y: 0,
     });
 
-    tl.to(
-      '.link',
-      {
-        opacity: 1,
-        y: 0,
-        stagger: 0.25,
-      },
-      '<250%'
-    );
+    tl.to('.link', {
+      opacity: 1,
+      y: 0,
+      stagger: 0.1,
+    });
     // gsap.to('#highlights-title', {
     //   opacity: 1,
     //   y: 0,

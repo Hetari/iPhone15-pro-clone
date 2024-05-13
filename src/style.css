@@ -132,7 +132,7 @@ canvas {
         @apply text-white text-3xl md:text-5xl font-normal md:font-semibold my-2
     }
 
-    .video-carousel_container {
+    .video-carousel-container {
         @apply relative sm:w-[70vw] w-[88vw] md:h-[70vh] sm:h-[50vh] h-[35vh]
     }
 
