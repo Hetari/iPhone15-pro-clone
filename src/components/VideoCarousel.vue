@@ -1,3 +1,5 @@
+<!-- Note: video carousel, this component is hard to understand, so I write a lot of comments for future reference -->
+
 <template>
   <!-- flex -->
   <div class="flex items-center">
@@ -8,8 +10,8 @@
       <div class="video-carousel-container">
         <div
           class="w-full h-full flex-center rounded-3xl overflow-hidden bg-black">
-          <!--! :ref="`video-${index}`" -->
           <video
+            :ref="`video-${index}`"
             id="video"
             preload="auto"
             playsinline
@@ -24,8 +26,8 @@
         </div>
 
         <div class="absolute top-12 left-[5%] z-10">
-          <!--! :ref="'text' + index" -->
           <p
+            :ref="`text${index}`"
             v-for="text in list.textLists"
             :key="text"
             class="text-xl md:text-2xl font-medium">
@@ -40,6 +42,9 @@
     <div class="flex-center py-5 px-7 bg-gray-300 backdrop-blur rounded-full">
       <!--! Loop it as the video numbers -->
       <span
+        v-for="(video, index) in highlightsSlides"
+        :key="video.id"
+        :style="{ width: dotWidth(index) }"
         class="mx-2 size-3 bg-gray-200 rounded-full relative cursor-pointer">
         <span class="absolute size-full rounded-full" />
       </span>
@@ -75,7 +80,20 @@
   const paused = ref(false);
   const currentVideoIndex = ref(0);
 
-  const dotWidth = (index: number) => {};
+  /**
+   * Calculate the width of the dot in the video carousel controller
+   * @param {number} index The index of the video in the highlightsSlides array
+   * @returns {string} The width of the dot in string format
+   */
+  const dotWidth = (index: number): string => {
+    /**
+     * If the video is currently playing and the index matches the currentVideoIndex,
+     * return a wide width. Otherwise, return a small width.
+     */
+    return index === currentVideoIndex.value && playing.value
+      ? '100px'
+      : '12px';
+  };
 
   const playNextVideo = (index: number) => {};
   const start = () => {};
