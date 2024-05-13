@@ -2,7 +2,9 @@
 
 <template>
   <!-- flex -->
-  <div class="flex items-center">
+  <div
+    class="flex items-center"
+    ref="carousel">
     <div
       v-for="(list, index) in highlightsSlides"
       :key="list.id"
@@ -10,8 +12,9 @@
       <div class="video-carousel-container">
         <div
           class="w-full h-full flex-center rounded-3xl overflow-hidden bg-black">
+          <!-- :ref="`video-${index}`" -->
           <video
-            :ref="`video-${index}`"
+            :ref="setVideosRef"
             id="video"
             preload="auto"
             playsinline
@@ -25,9 +28,11 @@
           </video>
         </div>
 
-        <div class="absolute top-12 left-[5%] z-10">
+        <div
+          :ref="setTextsRef"
+          class="absolute top-12 left-[5%] z-10 opacity-0 -translate-x-52">
+          <!-- :ref="`text${index}`" -->
           <p
-            :ref="`text${index}`"
             v-for="text in list.textLists"
             :key="text"
             class="text-xl md:text-2xl font-medium">
@@ -40,13 +45,14 @@
 
   <div class="relative flex-center mt-10">
     <div class="flex-center py-5 px-7 bg-gray-300 backdrop-blur rounded-full">
-      <!--! Loop it as the video numbers -->
       <span
         v-for="(video, index) in highlightsSlides"
         :key="video.id"
         :style="{ width: dotWidth(index) }"
         class="mx-2 size-3 bg-gray-200 rounded-full relative cursor-pointer">
-        <span class="absolute size-full rounded-full" />
+        <span
+          :ref="setProgressBars"
+          class="absolute size-full rounded-full progress-bar" />
       </span>
     </div>
 
@@ -74,11 +80,34 @@
 <script setup lang="ts">
   import { highlightsSlides } from '@/constants';
   import { pauseImg, playImg, replayImg } from '@/utils';
-  import { onMounted, ref } from 'vue';
+  import { onBeforeUpdate, onMounted, ref } from 'vue';
+  import gsap from 'gsap';
 
   const playing = ref(false);
   const paused = ref(false);
+  const carousel: any = ref('');
   const currentVideoIndex = ref(0);
+  let videos: any = [];
+  let texts: any = [];
+  let progressBars: any = [];
+
+  function setVideosRef(e: any) {
+    if (e) {
+      videos.push(e);
+    }
+  }
+
+  function setTextsRef(e: any) {
+    if (e) {
+      texts.push(e);
+    }
+  }
+
+  function setProgressBars(e: any) {
+    if (e) {
+      progressBars.push(e);
+    }
+  }
 
   /**
    * Calculate the width of the dot in the video carousel controller
@@ -96,14 +125,86 @@
   };
 
   const playNextVideo = (index: number) => {};
-  const start = () => {};
+
+  /**
+   * Start the video carousel
+   * Play the first video and set playing to true
+   */
+  const start = () => {
+    const firstVideo = videos[0];
+
+    // play the first video
+    firstVideo.play();
+
+    // set playing to true
+    playing.value = true;
+
+    // TODO: add animation here
+    // TODO: stop the animation here
+  };
+
   const restart = () => {};
   const togglePause = () => {};
   const stopCurrentVideo = () => {};
 
-  const initIntersectionObserver = () => {};
+  // TODO
+  /**
+   * Initialize the intersection observer to observe the carousel
+   * When the carousel comes into the viewport, start the video
+   */
+  const initIntersectionObserver = () => {
+    /**
+     * The options for the intersection observer
+     * root: null means the viewport
+     * rootMargin: 0px means the observer will trigger when the element is half in the viewport
+     * threshold: 0.5 means the observer will trigger when the element is half in the viewport
+     */
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    };
+
+    /**
+     * Create a new intersection observer
+     * The observer will trigger the callback function when the carousel comes into the viewport
+     */
+    const observer = new IntersectionObserver((entries) => {
+      /**
+       * Loop through all the entries
+       * entries is an array of IntersectionObserverEntry objects
+       */
+      entries.forEach((entry) => {
+        /**
+         * If the carousel is intersecting with the viewport
+         */
+        if (entry.isIntersecting) {
+          /**
+           * Start the video
+           * Disconnect the observer
+           * To prevent the observer from triggering multiple times
+           */
+          start();
+          observer.disconnect();
+        }
+      });
+    }, options);
+
+    /**
+     * Get the carousel element
+     */
+    const carouselElement = carousel.value;
+    /**
+     * Observe the carousel element
+     */
+    observer.observe(carouselElement);
+  };
 
   onMounted(() => {
     initIntersectionObserver();
+  });
+
+  onBeforeUpdate(() => {
+    videos = [];
   });
 </script>
