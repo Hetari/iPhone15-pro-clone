@@ -2,13 +2,15 @@
   <main>
     <Navbar />
     <Hero />
+    <Highlights />
+    <div class="h-screen"></div>
   </main>
 </template>
 
 <script setup lang="ts">
   import Lenis from 'lenis';
   import { onMounted } from 'vue';
-  import { Navbar, Hero } from './components';
+  import { Navbar, Hero, Highlights } from './components';
 
   onMounted(() => {
     const lenis = new Lenis();

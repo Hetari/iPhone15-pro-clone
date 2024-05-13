@@ -42,7 +42,7 @@ export const navLists: string[] = [
   'Support',
 ];
 
-export const hightlightsSlides: highlightSecondVideoType[] = [
+export const highlightsSlides: highlightSecondVideoType[] = [
   {
     id: 1,
     textLists: [
