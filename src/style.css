@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    @font-face {
+        font-family: 'display';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(/public/Satoshi-Variable.ttf) format('truetype');
+    }
+}
+
+@layer components {
+    body {
+        @apply font-display
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +32,6 @@ body {
     background: #000;
     border-color: #3b3b3b;
     user-select: none;
-    /* cursor: none; */
 }
 
 canvas {
@@ -30,6 +45,8 @@ canvas {
     max-width: 1120px;
 }
 
+
+
 @layer utilities {
     .flex-center {
         @apply flex items-center justify-center
@@ -40,7 +57,7 @@ canvas {
     }
 
     .btn {
-        @apply px-5 py-2 my-5 rounded-3xl bg-blue hover:bg-transparent border border-transparent hover:border hover:text-blue hover:border-blue
+        @apply px-5 py-2 my-5 rounded-3xl bg-blue hover:bg-[#359eff] border border-transparent
     }
 
     .color-container {

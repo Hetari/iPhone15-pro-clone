@@ -29,7 +29,18 @@ type sizesType = {
   value: string;
 };
 
-export const navLists: string[] = ['Store', 'Mac', 'iPhone', 'Support'];
+export const navLists: string[] = [
+  'Store',
+  'Mac',
+  'iPhone',
+  'Watch',
+  'Vision',
+  'AriPods',
+  'TV & Home',
+  'Entertainment',
+  'Accessories',
+  'Support',
+];
 
 export const hightlightsSlides: highlightSecondVideoType[] = [
   {

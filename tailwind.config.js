@@ -2,6 +2,9 @@
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
+    fontFamily: {
+      display: ['Satoshi', 'sans-serif'],
+    },
     extend: {
       colors: {
         blue: '#2997FF',

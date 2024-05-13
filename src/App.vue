@@ -1,9 +1,22 @@
 <template>
-  <Navbar></Navbar>
+  <main>
+    <Navbar />
+    <Hero />
+  </main>
 </template>
 
 <script setup lang="ts">
-  import { Navbar } from './components';
+  import Lenis from 'lenis';
+  import { onMounted } from 'vue';
+  import { Navbar, Hero } from './components';
 
-  Navbar;
+  onMounted(() => {
+    const lenis = new Lenis();
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+  });
 </script>
