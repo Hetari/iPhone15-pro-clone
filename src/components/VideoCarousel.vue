@@ -61,7 +61,7 @@
 
     <button
       class="control-btn"
-      v-if="!playing"
+      v-if="!playing && !paused"
       @click="restart">
       <img
         width="30"
@@ -127,9 +127,7 @@
      * return a wide width. Otherwise, return a small width.
      */
     // || && (playing.value || paused.value)
-    return index === currentVideoIndex.value && playing.value
-      ? '100px'
-      : '12px';
+    return index === currentVideoIndex.value ? '100px' : '12px';
   };
 
   /**
@@ -149,6 +147,9 @@
 
     // If there is no next video, stop here
     if (typeof nextVideo === 'undefined') {
+      // Stop playing the video
+      playing.value = false;
+      paused.value = false;
       return;
     }
 
@@ -182,6 +183,7 @@
 
     // Reset everything
     currentVideoIndex.value = 0;
+    // playing.value = true;
     paused.value = false;
 
     // Start the video carousel
