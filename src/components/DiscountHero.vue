@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-[#1D1D1F] h-20 flex-center">
+  <section class="bg-[#1D1D1F] h-20 flex-center px-10">
     <p
       class="text-center text-[17px] max-lg:text-[15px] leading-5 lg:max-w-[25rem] max-lg:max-w-[26rem]">
       Get $170–$630 in credit toward iPhone 15 Pro when you trade in iPhone 11

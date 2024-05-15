@@ -1,10 +1,11 @@
 <!-- Note: video carousel, this component is hard to understand, so I write a lot of comments for future reference -->
 
 <template>
-  <!-- flex -->
-  <div
+  <!-- Here I track the video carousel div so I can know when I enter the viewport the videos will start to play -->
+  <section
     class="flex items-center"
     ref="carousel">
+    <!-- This loop is to show all the videos, each video will be in a new div -->
     <div
       v-for="(list, index) in highlightsSlides"
       :key="list.id"
@@ -12,7 +13,9 @@
       <div class="video-carousel-container">
         <div
           class="w-full h-full flex-center rounded-3xl overflow-hidden bg-black">
-          <!-- :ref="`video-${index}`" -->
+          <!-- This ref is for keeping track of all videos, and to now which one to play, got to, or to stop  -->
+          <!-- I think it's more easy to track all the htmlVideoElements in an array, that's why I write it like this -->
+          <!-- `@ended="playNextVideo(index)` so from here I track the end of each video, if it ended, just start the next one -->
           <video
             :ref="setVideosRef"
             id="video"
@@ -21,17 +24,16 @@
             muted
             @ended="playNextVideo(index)">
             >
-
             <source
               :src="list.video"
               type="video/webm" />
           </video>
         </div>
 
+        <!-- Here I track all the DIVs that will contains the videTexts, so I can animate them -->
         <div
           :ref="setTextsRef"
           class="absolute top-12 left-[5%] z-10 opacity-0 -translate-x-52">
-          <!-- :ref="`text${index}`" -->
           <p
             v-for="text in list.textLists"
             :key="text"
@@ -41,7 +43,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="relative flex-center mt-10">
     <div class="flex-center py-5 px-7 bg-gray-300 backdrop-blur rounded-full">
@@ -50,7 +52,7 @@
         :key="video.id"
         :style="{ width: dotWidth(index) }"
         @click="goToVide(index)"
-        class="mx-2 size-3 bg-gray-200 rounded-full relative cursor-pointer">
+        class="mx-2 size-3 bg-gray-200 rounded-full relative cursor-pointer transition-[width] duration-500">
         <span
           :ref="setProgressBars"
           class="absolute size-full rounded-full progress-bar" />
@@ -73,9 +75,10 @@
       class="control-btn">
       <img
         width="30"
-        :src="paused === false ? pauseImg : playImg"
-        :alt="paused === false ? 'pause button' : 'play button'" />
+        :src="!paused ? pauseImg : playImg"
+        :alt="!paused ? 'pause button' : 'play button'" />
     </button>
+    <br />
   </div>
 </template>
 
@@ -87,7 +90,9 @@
 
   const playing = ref(false);
   const paused = ref(false);
+
   const carousel: any = ref('');
+
   const currentVideoIndex = ref(0);
   let videos: HTMLVideoElement[] = [];
   let texts = [];
@@ -121,6 +126,7 @@
      * If the video is currently playing and the index matches the currentVideoIndex,
      * return a wide width. Otherwise, return a small width.
      */
+    // || && (playing.value || paused.value)
     return index === currentVideoIndex.value && playing.value
       ? '100px'
       : '12px';
@@ -163,10 +169,8 @@
     const firstVideo = videos[index];
 
     // play the first video
-    firstVideo.play();
-
-    // set playing to true
     playing.value = true;
+    firstVideo.play();
 
     // TODO: add animation here
     // TODO: stop the animation here
@@ -186,6 +190,7 @@
 
   const togglePause = () => {
     playing.value = !playing.value;
+    paused.value = !paused.value;
 
     const currentVideo = videos[currentVideoIndex.value];
     if (currentVideo) {
@@ -206,6 +211,11 @@
    * @param {number} index The index of the video in the highlightsSlides array
    */
   const goToVide = (index: number) => {
+    if (!playing.value || paused.value) {
+      playing.value = true;
+      paused.value = false;
+    }
+
     // TODO: add animation here
 
     // Pause the current video, and restart it
@@ -251,6 +261,8 @@
          * If the carousel is intersecting with the viewport
          */
         if (entry.isIntersecting) {
+          console.log('start');
+
           /**
            * Start the video
            * Disconnect the observer
@@ -278,5 +290,6 @@
 
   onBeforeUpdate(() => {
     videos = [];
+    texts = [];
   });
 </script>
