@@ -39,7 +39,7 @@
           <p
             v-for="text in list.textLists"
             :key="text"
-            class="text-xl md:text-2xl font-medium">
+            class="text-xl md:text-2xl font-bold">
             {{ text }}
           </p>
         </div>
@@ -92,7 +92,7 @@
 <script setup lang="ts">
   import { highlightsSlides } from '@/constants';
   import { pauseImg, playImg, replayImg } from '@/utils';
-  import { onBeforeUpdate, onMounted, ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import gsap from 'gsap';
 
   const playing = ref(false);
@@ -196,6 +196,7 @@
     paused.value = false;
 
     // Start the video carousel
+
     start();
   };
 
@@ -293,10 +294,6 @@
     observer.observe(carouselElement);
   };
 
-  onMounted(() => {
-    initIntersectionObserver();
-  });
-
   const animateTexts = (index: number) => {
     // Animate the text at the given index
     gsap.to(texts[index], {
@@ -312,20 +309,26 @@
     gsap.to(texts[index], {
       x: '-100%',
       opacity: 0,
-      duration: 0.1,
+      duration: 1,
       ease: 'circ.inOut',
     });
   };
 
   const animateSlideMovement = (index: number) => {
     // Get the array of carousel cards
-    const cards: HTMLElement[] = Array.from(carousel.value.children);
+    let cards: HTMLElement[] = Array.from(carousel.value.children);
 
     // Calculate the width of a single card with the padding and gap
-    const cardWidth = cards[index].offsetWidth;
+    let cardWidth = ref(cards[index].offsetWidth);
 
     // Calculate the new x position of the carousel based on the index of the slide to animate
-    const newX: string = `-${index * cardWidth}px`;
+    let newX: string = `-${index * cardWidth.value}px`;
+
+    window.onresize = () => {
+      cards = Array.from(carousel.value.children);
+      cardWidth.value = cards[index].offsetWidth;
+      newX = `-${index * cardWidth.value}px`;
+    };
 
     // Animate the carousel to the new x position
     gsap.to(carousel.value, {
@@ -334,4 +337,8 @@
       ease: 'circ.inOut',
     });
   };
+
+  onMounted(() => {
+    initIntersectionObserver();
+  });
 </script>
