@@ -60,9 +60,10 @@
         :style="{ width: dotWidth(index) }"
         @click="goToVide(index)"
         class="mx-2 size-3 bg-gray-200 rounded-full relative cursor-pointer transition-[width] duration-500">
+        <span class="absolute size-full rounded-full" />
         <span
           :ref="setProgressBars"
-          class="absolute size-full rounded-full progress-bar" />
+          class="absolute h-full w-0 bg-white rounded-full cursor-none pointer-events-none"></span>
       </span>
     </div>
 
@@ -92,7 +93,7 @@
 <script setup lang="ts">
   import { highlightsSlides } from '@/constants';
   import { pauseImg, playImg, replayImg } from '@/utils';
-  import { onMounted, ref, watch } from 'vue';
+  import { onMounted, ref } from 'vue';
   import gsap from 'gsap';
 
   const playing = ref(false);
@@ -164,6 +165,7 @@
     nextVideo.play();
     animateTexts(index + 1);
     animateSlideMovement(index + 1);
+    animateProgress(index + 1);
     resetTexts(index);
 
     // Increment the currentVideoIndex value
@@ -184,6 +186,7 @@
     // animation here
     animateTexts(index);
     animateSlideMovement(index);
+    animateProgress(index);
   };
 
   const restart = () => {
@@ -197,7 +200,7 @@
 
     // Start the video carousel
 
-    start();
+    start(0);
   };
 
   const togglePause = () => {
@@ -335,6 +338,34 @@
       x: newX,
       duration: 0.5,
       ease: 'circ.inOut',
+    });
+  };
+
+  const animateProgress = (index: number) => {
+    const videoDuration = highlightsSlides[index].videoDuration * 1000;
+
+    const tl = gsap.timeline();
+
+    // Add the first animation to the timeline
+    tl.to(progressBars[index], {
+      width: '100%',
+      delay: 0.7,
+      duration: videoDuration / 1000,
+    });
+
+    // Add the second animation to the timeline after the first one completes
+    tl.to(progressBars[index], {
+      opacity: '0',
+      delay: 0.5,
+    });
+
+    // reset everything
+    tl.to(progressBars[index], {
+      width: '0',
+    });
+
+    tl.to(progressBars[index], {
+      opacity: '100',
     });
   };
 
