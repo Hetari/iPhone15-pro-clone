@@ -3,8 +3,8 @@
     id="highlights"
     class="w-screen overflow-hidden h-full common-padding bg-zinc">
     <div class="screen-max-width">
-      <div
-        class="mb-12 w-full md:flex items-end justify-between max-md:space-y-5">
+      <!-- max-md:space-y-5 -->
+      <div class="mb-12 w-full md:flex items-end justify-between">
         <h1
           id="highlights-title"
           class="section-heading">

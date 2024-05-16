@@ -9,7 +9,7 @@
     <div
       v-for="(list, index) in highlightsSlides"
       :key="list.id"
-      class="pr-10 sm:pr-20">
+      class="pr-10 sm:pr-20 carousel-item">
       <div class="video-carousel-container">
         <div
           class="w-full h-full flex-center rounded-3xl overflow-hidden bg-black">
@@ -17,6 +17,8 @@
           <!-- I think it's more easy to track all the htmlVideoElements in an array, that's why I write it like this -->
           <!-- `@ended="playNextVideo(index)` so from here I track the end of each video, if it ended, just start the next one -->
           <video
+            class="pointer-events-none"
+            :class="{ 'translate-x-44': list.id === 2 }"
             :ref="setVideosRef"
             id="video"
             preload="auto"
@@ -45,8 +47,13 @@
     </div>
   </section>
 
-  <div class="relative flex-center mt-10">
-    <div class="flex-center py-5 px-7 bg-gray-300 backdrop-blur rounded-full">
+  <div
+    ref="progresses"
+    class="relative flex-center mt-10">
+    <!-- small dots -->
+    <div
+      id="dots-container"
+      class="flex-center py-5 px-7 backdrop-blur rounded-full bg-gray-300">
       <span
         v-for="(video, index) in highlightsSlides"
         :key="video.id"
@@ -92,11 +99,12 @@
   const paused = ref(false);
 
   const carousel: any = ref('');
+  const progresses: any = ref('');
 
   const currentVideoIndex = ref(0);
   let videos: HTMLVideoElement[] = [];
-  let texts = [];
-  let progressBars = [];
+  let texts: HTMLElement[] = [];
+  let progressBars: HTMLElement[] = [];
 
   function setVideosRef(e: any) {
     if (e) {
@@ -137,7 +145,7 @@
   const playNextVideo = (index: number) => {
     // If the index is bigger than the number of videos,
     // stop the video and return (don't play the next video)
-    if (index > highlightsSlides.length - 1) {
+    if (index >= highlightsSlides.length - 1) {
       // Stop playing the video
       playing.value = false;
       return;
@@ -154,12 +162,12 @@
     }
 
     nextVideo.play();
+    animateTexts(index + 1);
+    animateSlideMovement(index + 1);
+    resetTexts(index);
 
     // Increment the currentVideoIndex value
     currentVideoIndex.value++;
-
-    // TODO: add animation here same as start function and move the video slide
-    // TODO: stop the animation here
   };
 
   /**
@@ -173,8 +181,9 @@
     playing.value = true;
     firstVideo.play();
 
-    // TODO: add animation here
-    // TODO: stop the animation here
+    // animation here
+    animateTexts(index);
+    animateSlideMovement(index);
   };
 
   const restart = () => {
@@ -263,8 +272,6 @@
          * If the carousel is intersecting with the viewport
          */
         if (entry.isIntersecting) {
-          console.log('start');
-
           /**
            * Start the video
            * Disconnect the observer
@@ -290,8 +297,41 @@
     initIntersectionObserver();
   });
 
-  onBeforeUpdate(() => {
-    videos = [];
-    texts = [];
-  });
+  const animateTexts = (index: number) => {
+    // Animate the text at the given index
+    gsap.to(texts[index], {
+      x: '0',
+      opacity: 1,
+      duration: 1,
+      delay: 0.5,
+      ease: 'circ.inOut',
+    });
+  };
+
+  const resetTexts = (index: number) => {
+    gsap.to(texts[index], {
+      x: '-100%',
+      opacity: 0,
+      duration: 0.1,
+      ease: 'circ.inOut',
+    });
+  };
+
+  const animateSlideMovement = (index: number) => {
+    // Get the array of carousel cards
+    const cards: HTMLElement[] = Array.from(carousel.value.children);
+
+    // Calculate the width of a single card with the padding and gap
+    const cardWidth = cards[index].offsetWidth;
+
+    // Calculate the new x position of the carousel based on the index of the slide to animate
+    const newX: string = `-${index * cardWidth}px`;
+
+    // Animate the carousel to the new x position
+    gsap.to(carousel.value, {
+      x: newX,
+      duration: 0.5,
+      ease: 'circ.inOut',
+    });
+  };
 </script>
