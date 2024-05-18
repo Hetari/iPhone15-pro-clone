@@ -57,7 +57,9 @@
       <span
         v-for="(video, index) in highlightsSlides"
         :key="video.id"
-        :style="{ width: dotWidth(index) }"
+        :style="{
+          width: `${!(!playing && !paused) ? dotWidth(index) : '12px'}`,
+        }"
         @click="goToVide(index)"
         class="mx-2 size-3 bg-gray-200 rounded-full relative cursor-pointer transition-[width] duration-500">
         <span class="absolute size-full rounded-full" />
@@ -106,6 +108,8 @@
   let videos: HTMLVideoElement[] = [];
   let texts: HTMLElement[] = [];
   let progressBars: HTMLElement[] = [];
+
+  const tl = gsap.timeline();
 
   function setVideosRef(e: any) {
     if (e) {
@@ -221,10 +225,18 @@
     if (currentVideo) {
       if (!playing.value) {
         currentVideo.pause();
+
+        if (tl && tl.isActive()) {
+          tl.pause();
+        }
       }
       //
       else {
         currentVideo.play();
+
+        if (tl && tl.paused()) {
+          tl.resume();
+        }
       }
     }
   };
@@ -349,29 +361,28 @@
   const animateProgress = (index: number) => {
     const videoDuration = highlightsSlides[index].videoDuration * 1000;
 
-    const tl = gsap.timeline();
-
     // Add the first animation to the timeline
     tl.to(progressBars[index], {
       width: '100%',
-      delay: 0.7,
       duration: videoDuration / 1000,
-    });
-
-    // Add the second animation to the timeline after the first one completes
-    tl.to(progressBars[index], {
-      opacity: '0',
-      delay: 0.5,
+      onComplete: () => {
+        gsap.set(progressBars[index], {
+          // opacity: 0,
+          width: 0,
+          delay: 0.5,
+          ease: 'circ',
+        });
+      },
     });
 
     // reset everything
-    tl.to(progressBars[index], {
-      width: '0',
-    });
+    // tl.to(progressBars[index], {
+    //   width: '0',
+    // });
 
-    tl.to(progressBars[index], {
-      opacity: '100',
-    });
+    // tl.to(progressBars[index], {
+    //   opacity: '100',
+    // });
   };
 
   onMounted(() => {
