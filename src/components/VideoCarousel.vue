@@ -135,8 +135,22 @@
      * If the video is currently playing and the index matches the currentVideoIndex,
      * return a wide width. Otherwise, return a small width.
      */
-    // || && (playing.value || paused.value)
-    return index === currentVideoIndex.value ? '100px' : '12px';
+    let width: string;
+
+    // for phone
+    if (window.innerWidth < 760) {
+      width = '40px';
+    }
+    // for tablet
+    else if (window.innerWidth < 1200) {
+      width = '70px';
+    }
+    // for laptop and larger
+    else {
+      width = '100px';
+    }
+
+    return index === currentVideoIndex.value ? width : '12px';
   };
 
   /**
@@ -190,16 +204,12 @@
   };
 
   const restart = () => {
-    // TODO: add animation here
-    // TODO: stop the animation here
-
     // Reset everything
     currentVideoIndex.value = 0;
     // playing.value = true;
     paused.value = false;
 
     // Start the video carousel
-
     start(0);
   };
 
@@ -217,8 +227,6 @@
         currentVideo.play();
       }
     }
-
-    // TODO: paused the gsap timeline animation
   };
 
   /**
@@ -231,9 +239,6 @@
       paused.value = false;
     }
 
-    // TODO: add animation here
-
-    // Pause the current video, and restart it
     const currentVideo = videos[currentVideoIndex.value];
     currentVideo.pause();
     currentVideo.currentTime = 0;
