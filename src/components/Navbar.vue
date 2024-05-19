@@ -1,7 +1,7 @@
 <template>
   <!-- TODO: Refactor this component until you match the real site nav https://www.apple.com/iphone-15-pro/ -->
   <header class="w-full p-3 px-5 sm:px-10 flex-center">
-    <nav class="flex gap-10 screen-max-width">
+    <nav class="max-sm:w-5/6 flex gap-10 screen-max-width">
       <img
         :src="appleImg"
         alt="apple logo"
