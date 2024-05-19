@@ -353,8 +353,8 @@
     // Animate the carousel to the new x position
     gsap.to(carousel.value, {
       x: newX,
-      duration: 0.5,
-      ease: 'circ.inOut',
+      duration: 1,
+      ease: 'expo.inOut',
     });
   };
 
