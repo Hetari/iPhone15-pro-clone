@@ -18,12 +18,6 @@
     }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     color: white;
     width: 100dvw;
@@ -44,8 +38,6 @@ canvas {
     position: relative;
     max-width: 1120px;
 }
-
-
 
 @layer utilities {
     .flex-center {

@@ -8,11 +8,10 @@
     <img src="https://img.shields.io/badge/-Three_JS-black?style=for-the-badge&logoColor=white&logo=threedotjs&color=000000" alt="three.js" />
     <img src="https://img.shields.io/badge/-GSAP-green?style=for-the-badge&logo=GreenSock&logoColor=black" />
     <img src="https://img.shields.io/badge/-TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=for-the-badge" />
-
   </div>
-</div>
-
-![website](./public/design/full-screenshot.webp)
+  <br />
+  Using <a href="https://docs.tresjs.org/">TreeJS</a> with VUE for the 3D model 
+  </div>
 
 ## 🤸 Quick Start
 
@@ -48,3 +47,7 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser to view the project.
+
+![website](./public/design/full-screenshot.webp)
+
+<p align="center">Made with ❤️ by Hetari</p>
