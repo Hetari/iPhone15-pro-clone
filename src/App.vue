@@ -3,14 +3,14 @@
     <Navbar />
     <Hero />
     <Highlights />
-    <div class="h-screen"></div>
+    <PhoneModel />
   </main>
 </template>
 
 <script setup lang="ts">
   import Lenis from 'lenis';
   import { onMounted } from 'vue';
-  import { Navbar, Hero, Highlights } from './components';
+  import { Navbar, Hero, Highlights, PhoneModel } from './components';
 
   onMounted(() => {
     const lenis = new Lenis();
