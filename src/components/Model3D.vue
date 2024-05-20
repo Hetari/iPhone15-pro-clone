@@ -4,7 +4,7 @@
     preset="realistic">
     <TresPerspectiveCamera
       visible
-      :position="[0, 0, 1]"
+      :position="cameraPosition1"
       :look-at="[0, 0, 0]" />
     <OrbitControls
       :enableZoom="false"
@@ -23,37 +23,60 @@
     <TresAmbientLight :intensity="1" />
     <TresDirectionalLight
       cast-shadow
-      :position="[10, 0, 0]"
+      :position="lightPosition1"
       :intensity="2" />
 
     <!-- Additional lights -->
     <TresDirectionalLight
-      :position="[-10, -10, -10]"
+      :position="lightPosition2"
       :intensity="0.5" />
     <TresDirectionalLight
-      :position="[0, 10, -10]"
+      :position="lightPosition3"
       :intensity="2" />
     <TresDirectionalLight
-      :position="[0, -10, 10]"
+      :position="lightPosition4"
       :intensity="0.5" />
   </TresCanvas>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { ref, watch } from 'vue';
   import { TresCanvas } from '@tresjs/core';
-  import { OrbitControls, CameraControls } from '@tresjs/cientos';
+  import { OrbitControls } from '@tresjs/cientos';
   import IphoneModel from './IphoneModel.vue';
   import { gsap } from 'gsap';
   import { store } from '../store';
+  import { Vector3 } from 'three';
+
+  // Define light positions using Vector3
+  const cameraPosition1 = new Vector3(0, 0, 1);
+  const lightPosition1 = new Vector3(10, 0, 0);
+  const lightPosition2 = new Vector3(-10, -10, -10);
+  const lightPosition3 = new Vector3(0, 10, -10);
+  const lightPosition4 = new Vector3(0, -10, 10);
 
   const rotationY = ref(0);
 
-  const rotate = (direction) => {
-    let angle;
-    direction === 'left'
-      ? (angle = rotationY.value + 6.3)
-      : (angle = rotationY.value - 6.3);
+  watch(
+    () => store.rotateL,
+    (newVal) => newVal && rotate('left')
+  );
+  watch(
+    () => store.rotateR,
+    (newVal) => newVal && rotate('right')
+  );
+
+  const rotate = (direction: 'left' | 'right') => {
+    let angle: number;
+    const rotationAmount: number = 2 * Math.PI; // Rotate by 360 degrees
+
+    // Check the direction to determine the angle of rotation
+    if (direction === 'left') {
+      angle = rotationY.value + rotationAmount;
+    } else {
+      angle = rotationY.value - rotationAmount;
+    }
+    // Animate the rotation using GreenSock Animation Platform
     gsap.to(rotationY, { value: angle, duration: 1, ease: 'power1.inOut' });
   };
 </script>

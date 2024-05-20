@@ -42,12 +42,17 @@
           <!-- List of color options -->
           <ul class="color-container">
             <li
-              class="size-6 rounded-full mx-2 cursor-pointer"
+              class="size-6 rounded-full mx-2 cursor-pointer flex items-end justify-center"
               :style="{ 'background-color': model.color[0] }"
               v-for="model in models"
               @click="changeModel(model.modelColor, model.title, model.id)"
-              :key="model.id"></li>
-            <!-- TODO add dot under the line for selected color -->
+              :key="model.id">
+              <span
+                class="size-1 rounded-full absolute bottom-1.5 transition-[background] duration-300"
+                :class="
+                  currentId == model.id ? ' bg-white' : 'bg-transparent'
+                "></span>
+            </li>
           </ul>
 
           <!-- Size selection buttons -->
@@ -85,7 +90,7 @@
   gsap.registerPlugin(ScrollTrigger);
 
   const selectedModel = ref(true);
-  const currentId = ref(4);
+  const currentId = ref(1);
 
   // Ref for storing the current model name
   const modelName = ref('iPhone 15 Pro in Natural Titanium');
@@ -118,13 +123,13 @@
     animateSelectCircle(x);
     animatePhoneSizes(size, iPhone_lg, iPhone_sm);
 
-    // if (size == 'large') {
-    //   // store.rotateR = true;
-    //   // store.rotateL = false;
-    // } else {
-    //   // store.rotateR = false;
-    //   // store.rotateL = true;
-    // }
+    if (size == 'large') {
+      store.rotateR = true;
+      store.rotateL = false;
+    } else {
+      store.rotateR = false;
+      store.rotateL = true;
+    }
   };
 
   // Lifecycle hook to run when the component is mounted
