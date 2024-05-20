@@ -3,7 +3,7 @@
   <section
     id="model"
     class="common-padding">
-    <div class="screen-max-width">
+    <div class="screen-max-width max-h-screen">
       <!-- TODO: hover effects -->
       <h2
         id="three-d-heading"
@@ -14,10 +14,10 @@
       <!-- Wrapper for the 3D models -->
       <div
         ref="models_wrapper"
-        class="flex flex-col items-center mt-5 cursor-grab active:cursor-grabbing">
+        class="flex flex-col items-center cursor-grab active:cursor-grabbing translate-y-[100%] opacity-0">
         <div
-          ref="model"
-          class="w-full h-[75vh] md:h-[90vh] overflow-hidden relative flex-center">
+          ref="modelContainer"
+          class="w-full h-[70vh] md:h-[80vh] overflow-hidden relative flex-center">
           <!-- Small iPhone model -->
           <div
             ref="iPhone_sm"
@@ -28,7 +28,7 @@
           <!-- Large iPhone model -->
           <div
             ref="iPhone_lg"
-            class="size-full absolute translate-x-[100%]">
+            class="size-full absolute -translate-x-[100%]">
             <Model3D class="scale-110 transition-all" />
           </div>
         </div>
@@ -141,7 +141,18 @@
       },
     });
 
-    // TODO: animate model
+    gsap.to(models_wrapper.value, {
+      y: 0,
+      opacity: 1,
+      delay: 1,
+      scrollTrigger: {
+        trigger: '#three-d-heading',
+        start: 'top bottom',
+        end: 'bottom 80%',
+        scrub: 1,
+        toggleActions: 'play none none reset',
+      },
+    });
   });
 
   const animateSelectCircle = (newX: number) => {
@@ -155,13 +166,11 @@
   const animatePhoneSizes = (size: string, iPhone_lg: any, iPhone_sm: any) => {
     const lg = size === 'small' ? '-100%' : '0%';
     const sm = size === 'small' ? '0%' : '100%';
-
     gsap.to(iPhone_lg.value, {
       x: lg,
       duration: 1,
       ease: 'power2.inOut',
     });
-
     gsap.to(iPhone_sm.value, {
       x: sm,
       duration: 1,

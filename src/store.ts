@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 
 const store = reactive({
-  phoneColor: 'black',
+  phoneColor: 'yellow',
   rotateL: false,
   rotateR: true,
 });
