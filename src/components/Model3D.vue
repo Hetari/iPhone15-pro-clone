@@ -3,8 +3,9 @@
     alpha
     preset="realistic">
     <TresPerspectiveCamera
+      visible
       :position="[0, 0, 1]"
-      :look-at="[0, 0, 0]" />
+      :look-at="[10, 10, 1]" />
     <OrbitControls
       ref="orbitControlsRef"
       :enableZoom="false"
@@ -12,11 +13,11 @@
       :enableDamping="true"
       :dampingFactor="0.1"
       :enablePan="false" />
-    <Suspense timeout="0">
+    <Suspense>
       <IphoneModel
         :rotation="[0, rotationY, 0]"
         ref="iphoneModelRef"
-        :scale="4" />
+        :scale="modelScale" />
     </Suspense>
     <TresAmbientLight :intensity="1" />
     <TresDirectionalLight
@@ -47,6 +48,14 @@
   const rotationY = ref(0);
 
   import { gsap } from 'gsap';
+  const props = defineProps({
+    index: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  });
+  const modelScale = props.index === 0 ? 4 : 5; // Adjust scale based on index
 
   // const rotate = (direction) => {
   //   let angle;
