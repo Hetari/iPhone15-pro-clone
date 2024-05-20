@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tresjs/cientos": "^3.9.0",
+    "@tresjs/cientos": "^3.8.0",
     "@tresjs/core": "^3.9.0",
     "gsap": "^3.12.5",
     "lenis": "^1.0.45",
