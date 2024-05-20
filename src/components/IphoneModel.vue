@@ -29,11 +29,7 @@
   watch(
     () => store.phoneColor,
     (newColor) => {
-      if (colors[newColor]) {
-        setColor(colors[newColor]);
-      } else {
-        console.error(`Color ${newColor} not found in colors object`);
-      }
+      setColor(colors[newColor]);
     }
   );
 

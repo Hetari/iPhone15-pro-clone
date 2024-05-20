@@ -22,14 +22,14 @@
           <div
             ref="iPhone_sm"
             class="size-full absolute translate-x-0 scale-100 z-[3]">
-            <Model3D class="" />
+            <Model3D class="scale-100 transition-all" />
           </div>
 
           <!-- Large iPhone model -->
           <div
             ref="iPhone_lg"
             class="size-full absolute translate-x-[100%]">
-            <Model3D class="" />
+            <Model3D class="scale-110 transition-all" />
           </div>
         </div>
       </div>
@@ -129,7 +129,6 @@
 
   // Lifecycle hook to run when the component is mounted
   onMounted(() => {
-    gsap.registerPlugin(ScrollTrigger);
     gsap.to('#three-d-heading', {
       y: 0,
       opacity: 1,
@@ -141,6 +140,8 @@
         toggleActions: 'play none none reset',
       },
     });
+
+    // TODO: animate model
   });
 
   const animateSelectCircle = (newX: number) => {
@@ -154,9 +155,6 @@
   const animatePhoneSizes = (size: string, iPhone_lg: any, iPhone_sm: any) => {
     const lg = size === 'small' ? '-100%' : '0%';
     const sm = size === 'small' ? '0%' : '100%';
-    console.log('lg: ', lg, 'sm: ', sm);
-    console.log('iPhone_lg: ', iPhone_lg.value, 'iPhone_sm: ', iPhone_sm.value);
-    console.log('size: ', size);
 
     gsap.to(iPhone_lg.value, {
       x: lg,
