@@ -5,7 +5,7 @@
     <TresPerspectiveCamera
       visible
       :position="[0, 0, 1]"
-      :look-at="[10, 10, 1]" />
+      :look-at="[0, 0, 0]" />
     <OrbitControls
       ref="orbitControlsRef"
       :enableZoom="false"
@@ -17,7 +17,7 @@
       <IphoneModel
         :rotation="[0, rotationY, 0]"
         ref="iphoneModelRef"
-        :scale="modelScale" />
+        :scale="4" />
     </Suspense>
     <TresAmbientLight :intensity="1" />
     <TresDirectionalLight
@@ -27,49 +27,34 @@
 
     <!-- Additional lights -->
     <TresDirectionalLight
-      :position="[-100, -10, 40]"
+      :position="[-10, -10, -10]"
       :intensity="0.5" />
     <TresDirectionalLight
-      :position="[0, 20, -10]"
+      :position="[0, 10, -10]"
       :intensity="2" />
     <TresDirectionalLight
       :position="[0, -10, 10]"
-      :intensity="0.8" />
+      :intensity="0.5" />
   </TresCanvas>
 </template>
 
 <script setup>
-  // lang="ts"
-
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { TresCanvas } from '@tresjs/core';
   import { OrbitControls } from '@tresjs/cientos';
   import IphoneModel from './IphoneModel.vue';
+  import { gsap } from 'gsap';
+  import { store } from '../store.js';
+
   const rotationY = ref(0);
 
-  import { gsap } from 'gsap';
-  const props = defineProps({
-    index: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-  });
-  const modelScale = props.index === 0 ? 4 : 5; // Adjust scale based on index
+  // watch(
+  //   () => store.rotateL,
+  //   (newVal) => newVal && rotate('left')
+  // );
 
-  // const rotate = (direction) => {
-  //   let angle;
-  //   direction === 'left'
-  //     ? (angle = rotationY.value + 6.3)
-  //     : (angle = rotationY.value - 6.3);
-  //   gsap.to(rotationY, { value: angle, duration: 1, ease: 'power1.inOut' });
-  // };
-
-  // const onStart = () => {
-  //   console.log('start');
-  // };
-
-  // const onEnd = () => {
-  //   console.log('end');
-  // };
+  // watch(
+  //   () => store.rotateR,
+  //   (newVal) => newVal && rotate('right')
+  // );
 </script>

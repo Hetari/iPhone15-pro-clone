@@ -2,9 +2,9 @@
   <!-- Main section containing the 3D model and options -->
   <section
     id="model"
-    ref="modelRef"
     class="common-padding">
     <div class="screen-max-width">
+      <!-- TODO: hover effects -->
       <h2
         id="three-d-heading"
         class="section-heading">
@@ -45,7 +45,7 @@
               class="size-6 rounded-full mx-2 cursor-pointer"
               :style="{ 'background-color': model.color[0] }"
               v-for="model in models"
-              @click="changeModel(model.modelColor, model.title)"
+              @click="changeModel(model.modelColor, model.title, model.id)"
               :key="model.id"></li>
             <!-- TODO add dot under the line for selected color -->
           </ul>
@@ -74,6 +74,7 @@
 </template>
 
 <script setup lang="ts">
+  import { sizes, models } from '@/constants/index.ts';
   // Import necessary components and libraries
   import Model3D from './Model3D.vue';
   import { onMounted, ref } from 'vue';
@@ -83,17 +84,14 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
+  const selectedModel = ref(true);
+  const currentId = ref(4);
+
   // Ref for storing the current model name
   const modelName = ref('iPhone 15 Pro in Natural Titanium');
 
   // Ref for storing the selected size
   const selectedSize = ref('small');
-
-  // List of available sizes
-  const sizes = ref([
-    { label: '6.1"', value: 'small' },
-    { label: '6.7"', value: 'large' },
-  ]);
 
   // Refs for different elements in the template
   const iPhone_sm = ref(null);
@@ -101,40 +99,15 @@
   const model = ref(null);
   const models_wrapper = ref(null);
 
-  // List of available models with their details
-  const models = ref([
-    {
-      id: 1,
-      title: 'iPhone 15 Pro in Natural Titanium',
-      color: ['#8F8A81', '#ffe7b9', '#6f6c64'],
-      modelColor: 'yellow',
-    },
-    {
-      id: 2,
-      title: 'iPhone 15 Pro in Blue Titanium',
-      color: ['#53596E', '#6395ff', '#21242e'],
-      modelColor: 'blue',
-    },
-    {
-      id: 3,
-      title: 'iPhone 15 Pro in White Titanium',
-      color: ['#C9C8C2', '#ffffff', '#C9C8C2'],
-      modelColor: 'white',
-    },
-    {
-      id: 4,
-      title: 'iPhone 15 Pro in Black Titanium',
-      color: ['#454749', '#3b3b3b', '#181819'],
-      modelColor: 'black',
-    },
-  ]);
-
   // Function to change the phone model color and title
-  const changeModel = (modelColor: string, title: string) => {
+  const changeModel = (modelColor: string, title: string, id: number) => {
     // Set the phone color in the store
     store.phoneColor = modelColor;
     // Update the current model name
     modelName.value = title;
+
+    // Update the selected model ID
+    currentId.value = id;
   };
 
   // Function to change the selected size
@@ -173,25 +146,26 @@
   const animateSelectCircle = (newX: number) => {
     gsap.to('#selectCircle', {
       x: newX + 'px',
-      duration: 0.3,
+      duration: 0.1,
       ease: 'sine.inOut',
     });
   };
 
   const animatePhoneSizes = (size: string, iPhone_lg: any, iPhone_sm: any) => {
-    const lgX = size === 'small' ? -100 : 0;
-    const smX = size === 'small' ? 0 : 100;
+    const lg = size === 'small' ? '-100%' : '0%';
+    const sm = size === 'small' ? '0%' : '100%';
+    console.log('lg: ', lg, 'sm: ', sm);
+    console.log('iPhone_lg: ', iPhone_lg.value, 'iPhone_sm: ', iPhone_sm.value);
+    console.log('size: ', size);
 
-    const smPhone = iPhone_sm.value;
-    const lgPhone = iPhone_lg.value;
-
-    gsap.to(lgPhone, {
-      xPercent: lgX,
+    gsap.to(iPhone_lg.value, {
+      x: lg,
       duration: 1,
       ease: 'power2.inOut',
     });
-    gsap.to(smPhone, {
-      xPercent: smX,
+
+    gsap.to(iPhone_sm.value, {
+      x: sm,
       duration: 1,
       ease: 'power2.inOut',
     });
