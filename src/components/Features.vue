@@ -1,6 +1,6 @@
 <template>
   <section class="h-full common-padding bg-zinc relative">
-    <div class="screen-max-wdith">
+    <div class="screen-max-width">
       <div class="mb-12 w-full">
         <h1
           id="features-heading"
@@ -28,7 +28,7 @@
               ref="video">
               <source
                 :src="exploreVideo"
-                type="video/mp4" />
+                type="video/webm" />
             </video>
           </div>
 
@@ -74,8 +74,6 @@
       </div>
     </div>
   </section>
-
-  <div class="h-screen"></div>
 </template>
 
 <script setup lang="ts">
@@ -85,24 +83,6 @@
   import { ref, onMounted } from 'vue';
 
   const video: any = ref(null);
-  // const initIntersectionObserver = () => {
-  //   const options = {
-  //     root: null,
-  //     rootMargin: '0px',
-  //     threshold: 0.5,
-  //   };
-  //   const observer = new IntersectionObserver((entries) => {
-  //     entries.forEach((entry) => {
-  //       if (entry.isIntersecting) {
-  //         video.value.play();
-  //         observer.disconnect();
-  //       }
-  //     });
-  //   }, options);
-
-  //   const carouselElement = video.value;
-  //   observer.observe(carouselElement);
-  // };
 
   gsap.registerPlugin(ScrollTrigger);
   onMounted(() => {
@@ -148,7 +128,7 @@
       ease: 'power2.inOut',
       scrollTrigger: {
         trigger: '.g_grow',
-        start: '10% center',
+        start: '50% center',
         end: '80% center',
         scrub: 1,
         toggleActions: 'restart none none reverse',
