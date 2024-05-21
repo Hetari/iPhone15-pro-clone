@@ -5,5 +5,6 @@ import Highlights from './Highlights.vue';
 import PhoneModel from './PhoneModel.vue';
 import Features from './Features.vue';
 import Gaming from './Gaming.vue';
+import Footer from './Footer.vue';
 
-export { Hero, Navbar, Highlights, PhoneModel, Features, Gaming };
+export { Hero, Navbar, Highlights, PhoneModel, Features, Gaming, Footer };

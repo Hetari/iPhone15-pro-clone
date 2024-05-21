@@ -6,6 +6,7 @@
     <PhoneModel />
     <Features />
     <Gaming />
+    <Footer />
   </main>
 </template>
 
@@ -19,6 +20,7 @@
     PhoneModel,
     Features,
     Gaming,
+    Footer,
   } from './components';
 
   onMounted(() => {
