@@ -4,9 +4,11 @@
       <div>
         <p class="font-semibold text-gray text-xs">
           More ways to shop:
-          <span class="underline text-blue">Find an Apple Store</span>
+          <span class="underline text-blue cursor-pointer"
+            >Find an Apple Store</span
+          >
           or
-          <span class="underline text-blue">other retailer</span>
+          <span class="underline text-blue cursor-pointer">other retailer</span>
           near you
         </p>
 
