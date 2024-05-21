@@ -51,8 +51,9 @@
         start: 'top bottom',
         // end: 'bottom 80%',
         end: 'bottom 80%',
-        // scrub: 1,
-        toggleActions: 'play none none reset',
+
+        //toggleActions: start, leave, enterBack, leaveBack
+        toggleActions: 'restart none none reverse',
       },
     });
 
