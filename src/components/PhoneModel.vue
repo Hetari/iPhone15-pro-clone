@@ -89,7 +89,6 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const selectedModel = ref(true);
   const currentId = ref(1);
 
   // Ref for storing the current model name
@@ -101,7 +100,6 @@
   // Refs for different elements in the template
   const iPhone_sm = ref(null);
   const iPhone_lg = ref(null);
-  const model = ref(null);
   const models_wrapper = ref(null);
 
   // Function to change the phone model color and title
