@@ -6,7 +6,7 @@
   import { store } from '@/store';
   import { useGLTF } from '@tresjs/cientos';
   import { ref, onMounted, watch } from 'vue';
-  const { scene, materials } = await useGLTF('/models/scene.glb', {
+  const { scene, materials } = await useGLTF('./models/scene.glb', {
     draco: true,
   });
 
