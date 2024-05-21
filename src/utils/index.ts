@@ -20,10 +20,6 @@ import replay from '/assets/images/replay.svg';
 import play from '/assets/images/play.svg';
 import pause from '/assets/images/pause.svg';
 
-import yellow from '/assets/images/yellow.webp';
-import blue from '/assets/images/blue.webp';
-import white from '/assets/images/white.webp';
-import black from '/assets/images/black.webp';
 import explore1 from '/assets/images/explore1.webp';
 import explore2 from '/assets/images/explore2.webp';
 import chip from '/assets/images/chip.webp';
@@ -47,10 +43,6 @@ export const replayImg = replay;
 export const playImg = play;
 export const pauseImg = pause;
 
-export const yellowImg = yellow;
-export const blueImg = blue;
-export const whiteImg = white;
-export const blackImg = black;
 export const explore1Img = explore1;
 export const explore2Img = explore2;
 export const chipImg = chip;
