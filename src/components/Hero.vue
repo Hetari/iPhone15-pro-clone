@@ -4,8 +4,10 @@
     <!-- h-5/6 w-full -->
     <div class="h-[70vh] max-w-[87rem] mx-auto flex-col flex-center">
       <h1
+        @mouseenter="() => (store.isHovered = true)"
+        @mouseleave="() => (store.isHovered = false)"
         id="title"
-        class="hero-title translate-y-3">
+        class="hero-title cursor-none">
         iPhone 15 Pro
       </h1>
 
@@ -27,7 +29,9 @@
       id="cta"
       class="flex flex-col opacity-0 items-center translate-y-20">
       <a
-        href="#highlights"
+        @mouseenter="btnHover(true, 4)"
+        @mouseleave="btnHover(false, 1)"
+        @click="goToHighlight"
         class="btn"
         >Buy</a
       >
@@ -43,6 +47,22 @@
   import { heroVideo, smallHeroVideo } from '@/utils';
   import { computed, onMounted, ref } from 'vue';
   import { gsap } from 'gsap';
+  import { store } from '@/store';
+  import Lenis from 'lenis';
+
+  const btnHover = (bool: boolean, size: number) => {
+    store.isHovered = bool;
+    store.isBtnHovered = bool;
+    store.hoveredCircleSize = size;
+  };
+
+  const goToHighlight = (e: any) => {
+    e.preventDefault();
+
+    const id = 'highlights';
+    const target = document.getElementById(id) as HTMLElement;
+    target.scrollIntoView({ behavior: 'smooth' });
+  };
 
   // animations
   onMounted(() => {
@@ -62,16 +82,6 @@
   // Check screen width and set appropriate video source
   const videoSrc = ref('');
   const screenWidth = computed(() => window.innerWidth);
-  // computed({
-  //   // getter
-  //   get() {
-  //     return window.innerWidth;
-  //   },
-  //   // setter
-  //   set(newValue) {
-  //     return newValue;
-  //   },
-  // });
 
   videoSrc.value = screenWidth.value > 760 ? heroVideo : smallHeroVideo;
 

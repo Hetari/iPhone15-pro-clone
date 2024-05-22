@@ -1,5 +1,8 @@
 <template>
-  <div class="opacity-65 absolute left-10 bottom-32">
+  <div
+    class="opacity-65 absolute left-10 bottom-32"
+    @mouseenter="scrollHover(true, 2)"
+    @mouseleave="scrollHover(false, 1)">
     <div class="w-5 flex-center flex-col gap-4">
       <span class="animate-pulse">
         <p
@@ -28,3 +31,12 @@ c-5.858,5.857-5.858,15.355,0,21.213L278.787,150H15c-8.284,0-15,6.716-15,15S6.716
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+  import { store } from '@/store';
+
+  const scrollHover = (bool: boolean, size: number) => {
+    store.isHovered = bool;
+    store.hoveredCircleSize = size;
+  };
+</script>

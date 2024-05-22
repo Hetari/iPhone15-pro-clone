@@ -5,8 +5,10 @@ const store = reactive({
   rotateL: true,
   rotateR: false,
   isLinkHovered: false,
+  isBtnHovered: false,
   isHovered: false,
-  hoverCol: '',
+  isVideoHovered: false,
+  hoveredCircleSize: 1,
 });
 
 export { store };
