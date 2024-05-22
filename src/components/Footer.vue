@@ -1,7 +1,9 @@
 <template>
   <footer class="py-5 px-5 sm:px-10">
     <div class="screen-max-width">
-      <div>
+      <div
+        @mouseenter="() => (store.isHovered = true)"
+        @mouseleave="() => (store.isHovered = false)">
         <p class="font-semibold text-gray text-xs">
           More ways to shop:
           <span class="underline text-blue cursor-pointer"
@@ -16,7 +18,11 @@
       </div>
 
       <div class="bg-neutral-700 my-5 h-[1px] w-full"></div>
-      <div class="flex md:flex-row flex-col md:items-center justify-between">
+
+      <div
+        @mouseenter="() => (store.isHovered = true)"
+        @mouseleave="() => (store.isHovered = false)"
+        class="flex md:flex-row flex-col md:items-center justify-between">
         <p class="font-semibold text-gray text-xs">
           Copyright &copy; {{ new Date().getFullYear() }} Apple Inc. All rights
           reserved.
@@ -24,6 +30,8 @@
 
         <div class="flex">
           <div
+            @mouseenter="() => (store.isHovered = true)"
+            @mouseleave="() => (store.isHovered = false)"
             class="group"
             v-for="(link, index) in footerLinks"
             :key="index">
@@ -45,4 +53,5 @@
 
 <script setup lang="ts">
   import { footerLinks } from '@/constants';
+  import { store } from '@/store';
 </script>

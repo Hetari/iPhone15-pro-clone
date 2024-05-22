@@ -10,7 +10,20 @@
       </div>
 
       <div class="flex flex-col justify-center items-center overflow-hidden">
-        <div class="mt-32 mb-24 pl-24">
+        <div
+          @mouseenter="
+            () => {
+              store.isHovered = true;
+              store.hoveredCircleSize = 8;
+            }
+          "
+          @mouseleave="
+            () => {
+              store.isHovered = false;
+              store.hoveredCircleSize = 1;
+            }
+          "
+          class="mt-32 mb-24 pl-24">
           <h2 class="text-5xl lg:text-7xl font-semibold">iPhone.</h2>
           <h2 class="text-5xl lg:text-7xl font-semibold">
             Forged in titanium.
@@ -48,7 +61,20 @@
               </div>
             </div>
 
-            <div class="feature-text-container">
+            <div
+              @mouseenter="
+                () => {
+                  store.isHovered = true;
+                  store.hoveredCircleSize = 4;
+                }
+              "
+              @mouseleave="
+                () => {
+                  store.isHovered = false;
+                  store.hoveredCircleSize = 1;
+                }
+              "
+              class="feature-text-container">
               <div class="flex-1 flex-center">
                 <p class="feature-text g_text">
                   iPhone 15 Pro is
@@ -77,6 +103,7 @@
 </template>
 
 <script setup lang="ts">
+  import { store } from '@/store';
   import { explore1Img, explore2Img, exploreVideo } from '@/utils';
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';

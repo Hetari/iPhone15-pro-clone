@@ -12,13 +12,39 @@
       </div>
 
       <div className="flex flex-col items-center">
-        <h2 className="game-title">
+        <h2
+          @mouseenter="
+            () => {
+              store.isHovered = true;
+              store.hoveredCircleSize = 8;
+            }
+          "
+          @mouseleave="
+            () => {
+              store.isHovered = false;
+              store.hoveredCircleSize = 1;
+            }
+          "
+          className="game-title">
           A17 Pro chip.
           <br />
           A monster win for gaming.
         </h2>
 
-        <p className="game-subtitle">
+        <p
+          @mouseenter="
+            () => {
+              store.isHovered = true;
+              store.hoveredCircleSize = 4;
+            }
+          "
+          @mouseleave="
+            () => {
+              store.isHovered = false;
+              store.hoveredCircleSize = 1;
+            }
+          "
+          className="game-subtitle">
           It's here. The biggest redesign in the history of Apple GPUs.
         </p>
       </div>
@@ -51,7 +77,20 @@
       </div>
 
       <div className="game-text-container">
-        <div className="flex flex-1 justify-center flex-col">
+        <div
+          @mouseenter="
+            () => {
+              store.isHovered = true;
+              store.hoveredCircleSize = 8;
+            }
+          "
+          @mouseleave="
+            () => {
+              store.isHovered = false;
+              store.hoveredCircleSize = 1;
+            }
+          "
+          className="flex flex-1 justify-center flex-col">
           <p className="game-text g_fadeIn">
             A17 Pro is an entirely new class of iPhone chip that delivers our
             <span className="text-white"> best graphic performance by far </span
@@ -66,7 +105,20 @@
           </p>
         </div>
 
-        <div className="flex-1 flex justify-center flex-col g_fadeIn">
+        <div
+          @mouseenter="
+            () => {
+              store.isHovered = true;
+              store.hoveredCircleSize = 8;
+            }
+          "
+          @mouseleave="
+            () => {
+              store.isHovered = false;
+              store.hoveredCircleSize = 1;
+            }
+          "
+          className="flex-1 flex justify-center flex-col g_fadeIn">
           <p className="game-text">New</p>
           <p className="game-bigtext">Pro-class GPU</p>
           <p className="game-text">with 6 cores</p>
@@ -77,6 +129,7 @@
 </template>
 
 <script setup lang="ts">
+  import { store } from '@/store';
   import { chipImg, frameImg, frameVideo } from '@/utils';
   import gsap from 'gsap';
   import ScrollToPlugin from 'gsap/ScrollToPlugin';

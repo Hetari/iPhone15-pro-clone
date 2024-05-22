@@ -48,7 +48,6 @@
   import { computed, onMounted, ref } from 'vue';
   import { gsap } from 'gsap';
   import { store } from '@/store';
-  import Lenis from 'lenis';
 
   const btnHover = (bool: boolean, size: number) => {
     store.isHovered = bool;

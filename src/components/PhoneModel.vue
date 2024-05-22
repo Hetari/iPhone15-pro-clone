@@ -4,7 +4,6 @@
     id="model"
     class="common-padding">
     <div class="screen-max-width max-h-screen">
-      <!-- TODO: hover effects -->
       <h2
         id="three-d-heading"
         class="section-heading">
@@ -13,6 +12,8 @@
 
       <!-- Wrapper for the 3D models -->
       <div
+        @mouseenter="() => (store.hoveredCircleSize = 0)"
+        @mouseleave="() => (store.hoveredCircleSize = 1)"
         ref="models_wrapper"
         class="flex flex-col items-center cursor-grab active:cursor-grabbing translate-y-[100%] opacity-0">
         <div
@@ -35,9 +36,27 @@
       </div>
 
       <!-- Model name display -->
-      <p class="text-sm font-light text-center mb-5">{{ modelName }}</p>
+      <p
+        @mouseenter="() => (store.isHovered = true)"
+        @mouseleave="() => (store.isHovered = false)"
+        class="text-sm font-light text-center mb-5">
+        {{ modelName }}
+      </p>
 
-      <div class="mx-auto w-full">
+      <div
+        @mouseenter="
+          () => {
+            store.isHovered = true;
+            store.hoveredCircleSize = 4;
+          }
+        "
+        @mouseleave="
+          () => {
+            store.isHovered = false;
+            store.hoveredCircleSize = 1;
+          }
+        "
+        class="mx-auto w-full">
         <div class="flex-center">
           <!-- List of color options -->
           <ul class="color-container">
