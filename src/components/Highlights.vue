@@ -11,14 +11,20 @@
           Get the highlights.
         </h1>
         <div class="flex flex-wrap items-end gap-5">
-          <p class="link">
+          <p
+            class="link"
+            @mouseenter="() => (store.isLinkHovered = true)"
+            @mouseleave="() => (store.isLinkHovered = false)">
             Watch the film
             <img
               :src="watchImg"
               alt="watch"
               class="ml-2" />
           </p>
-          <p class="link">
+          <p
+            class="link"
+            @mouseenter="() => (store.isLinkHovered = true)"
+            @mouseleave="() => (store.isLinkHovered = false)">
             Watch the Event
             <img
               :src="rightImg"
@@ -34,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+  import { store } from '@/store';
   import VideoCarousel from './VideoCarousel.vue';
   import { rightImg, watchImg } from '@/utils';
   import { gsap } from 'gsap';

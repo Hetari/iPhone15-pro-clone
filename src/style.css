@@ -9,6 +9,10 @@
     background: transparent;
 }
 
+body:hover #cursor {
+    opacity: 1;
+}
+
 @layer base {
     @font-face {
         font-family: 'display';

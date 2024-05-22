@@ -1,5 +1,6 @@
 <template>
   <main>
+    <Cursor />
     <Navbar />
     <Hero />
     <Highlights />
@@ -14,6 +15,7 @@
   import Lenis from 'lenis';
   import { onMounted } from 'vue';
   import {
+    Cursor,
     Navbar,
     Hero,
     Highlights,
