@@ -33,11 +33,13 @@
       >
       <p class="font-normal text-xl">Form $199/month or $999</p>
     </div>
+    <ScrollAnimation />
   </section>
 </template>
 
 <script setup lang="ts">
   import DiscountHero from '@/components/DiscountHero.vue';
+  import ScrollAnimation from '@/components/ScrollAnimation.vue';
   import { heroVideo, smallHeroVideo } from '@/utils';
   import { computed, onMounted, ref } from 'vue';
   import { gsap } from 'gsap';

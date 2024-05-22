@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+    /* Remove scrollbar space */
+    width: 0;
+    /* Optional: just make scrollbar invisible */
+    background: transparent;
+}
+
 @layer base {
     @font-face {
         font-family: 'display';
