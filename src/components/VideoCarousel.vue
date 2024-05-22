@@ -39,6 +39,18 @@
           <p
             v-for="text in list.textLists"
             :key="text"
+            @mouseenter="
+              () => {
+                store.isHovered = true;
+                store.hoveredCircleSize = 4;
+              }
+            "
+            @mouseleave="
+              () => {
+                store.isHovered = false;
+                store.hoveredCircleSize = 1;
+              }
+            "
             class="text-xl md:text-2xl font-bold">
             {{ text }}
           </p>
@@ -97,6 +109,7 @@
   import { pauseImg, playImg, replayImg } from '@/utils';
   import { onMounted, ref } from 'vue';
   import gsap from 'gsap';
+  import { store } from '@/store';
 
   const playing = ref(false);
   const paused = ref(false);
@@ -112,19 +125,19 @@
   const tl = gsap.timeline();
 
   function setVideosRef(e: any) {
-    if (e) {
+    if (e && !videos.includes(e)) {
       videos.push(e);
     }
   }
 
   function setTextsRef(e: any) {
-    if (e) {
+    if (e && !texts.includes(e)) {
       texts.push(e);
     }
   }
 
   function setProgressBars(e: any) {
-    if (e) {
+    if (e && !progressBars.includes(e)) {
       progressBars.push(e);
     }
   }
@@ -167,6 +180,7 @@
     if (index >= highlightsSlides.length - 1) {
       // Stop playing the video
       playing.value = false;
+      paused.value = false;
       return;
     }
 
@@ -195,6 +209,10 @@
    * Play the first video and set playing to true
    */
   const start = (index: number = 0) => {
+    if (!playing.value && !paused.value) {
+      resetTexts(videos.length - 1);
+    }
+
     const firstVideo = videos[index];
 
     // play the first video
@@ -202,6 +220,7 @@
     firstVideo.play();
 
     // animation here
+
     animateTexts(index);
     animateSlideMovement(index);
     animateProgress(index);
